@@ -1,4 +1,4 @@
-# Kubernetes Deployment for whoami Application on Edge Nodes
+# Kubernetes PersistentVolumeClaim, Deployment, Service, and Ingress for whoami Application.
 
 apiVersion: v1 # API version for PersistentVolumeClaim
 kind: PersistentVolumeClaim

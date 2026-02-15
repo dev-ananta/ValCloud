@@ -1,6 +1,6 @@
 # ValCloud
 
-Personal Distributed Kubernetes Cloud. I developed this to learn about DevOps, Infrastructure, Docker, Reverse Proxy, Self-hosted Services, & Monitoring Stack. I found developing this a really great experience. I practice theory on paper then create it for practical application of learning. This is a Single-Sitter Project of mines to further advance my educational prowess pertaining to Computer Science and Software Development.
+Personal Distributed Kubernetes Cloud. 
 
 ---
 
@@ -11,8 +11,10 @@ Personal Distributed Kubernetes Cloud. I developed this to learn about DevOps, I
 ```
 ValCloud/
 ├── create_cluster.sh - Cluster Creation.
-├── app-deployment.yaml - Deployment, Service, & Ingress Details.
+├── app-deployment.yaml - PersistentVolumeClaim, Deployment, Service, & Ingress Details.
+├── argocd-core.yaml - Built-in GitOps & CI/CD and Zero-Touch Operations
 ├── monitoring-quickstart.yaml - Metrics Server Deployment Resources.
+├── monitoring-stack.yaml - Integrated Monitoring.
 ├── LICENSE - Licensing Information of ValCloud.
 └── README.md - Implementation Instruction & Specification Pertaining to ValCloud.
 ```
@@ -20,8 +22,10 @@ ValCloud/
 ### File Purposes
 
 - `create_cluster.sh`: Shell Script for Kubernetes Cluster Creation.
-- `app-deployment.yaml`: Kubernetes Deployment, Service, and Ingress for whoami Application.
+- `app-deployment.yaml`: Kubernetes PersistentVolumeClaim, Deployment, Service, and Ingress for whoami Application.
+- `argocd-core.yaml`: Implements Built-in GitOps & CI/CD and Zero-Touch Operations for Kubernetes
 - `monitoring-quickstart.yaml`: Resources for Metrics Server Deployment the Kubernetes Cluster
+- `monitoring-stack.yaml`: Deploys Prometheus (Database) & Grafana (Dashboard) for Kubernetes Cluster Monitoring
 
 ## Implementation Guide
 
@@ -38,18 +42,24 @@ ValCloud/
 chmod +x create_cluster.sh
 ./create_cluster.sh
 ```
-3. Verify Core Connection:
+3. Install GitOps (ArgoCD):
 ```bash
-kubectl get nodes # Check if "nodes" are running.
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
-4. Application Deployment:
+- Use `kubectl get pods -n argocd --watch` to watch the pods start.
+4. Install Monitoring
 ```bash
-kubectl apply -f app-deployment.yaml # Apply Application File to Cluster
+kubectl create namespace monitoring
+kubectl apply -f monitoring-stack.yaml
 ```
-5. Install Monitoring:
+5. Deploy Application
 ```bash
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-# Apply Official Metrics Server Configuration
+kubectl apply -f app-deployment.yaml
+```
+6. Verify Logic
+```bash
+kubectl get pods -o wide # NODE column should prefer k3d-val-cloud-agent-1
 ```
 
 ## Testing/Utilization Instructions
@@ -79,15 +89,13 @@ How this **works**:
 - **Commit 3**: Write `monitoring-quickstart.yaml`.
 - **Commit 4**: Update `README.md`.
 - **Commit 5**: Testing Stage.
-- **Commit 6**: Define Locations for Edge-Native Architecture.
-- **Commit 7**: Integrate GitOps Loop in order to Sync Config Changes.
-- **Commit 8**: Implement Built-in GitOps & CI/CD via ArgoCD.
-- **Commit 9**: Integrate Monitoring & Security via Prometheus & Grafana.
-- **Commit 10**: Add Node Labels & Affinity Rules for Dynamic Location-Aware Scheduling.
-- **Commit 11**: Add Persistent & Distributed Storage via Persistent Volume Claims.
-- **Commit 12**: Further Develop Extensibility by Adding Configuration Hook.
-- **Commit 13**: Test & Debug.
-- **Commit 14**: Request Feedback.
-- **Commit 15**: Improve & Finalize for MVP Publishing.
+- **Commit 6**: Define Locations for Edge-Native Architecture in `create_cluster.sh`.
+- **Commit 7**: Write `argocd-core.yaml`.
+- **Commit 8**: Write `monitoring-stack.yaml`.
+- **Commit 9**: Update `app-deployment.yaml` in order to add Persistent Storage, Location-Aware Scheduling, & Resource Limits.
+- **Commit 10**: Update README.md
+- **Commit 11**: Test & Debug.
+- **Commit 12**: Request Feedback.
+- **Commit 13**: Improve & Finalize for MVP Publishing.
 
 #### Signed by Ananta the Developer
