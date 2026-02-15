@@ -1,0 +1,26 @@
+# Integrated Monitoring: Deploys Prometheus (Database) & Grafana (Dashboard) for Kubernetes Cluster Monitoring
+
+apiVersion: v1 # API version for Namespace
+kind: Namespace
+
+metadata: # Metadata for the Namespace
+  name: monitoring
+---
+apiVersion: helm.cattle.io/v1 # API version for Helm Chart
+kind: Helm Chart
+
+metadata: # Metadata for the Helm Chart
+  name: prometheus-stack
+  namespace: monitoring
+
+spec: # Specification for the Helm Chart
+  chart: kube-prometheus-stack
+  repo: https://prometheus-community.github.io/helm-charts
+  targetNamespace: monitoring
+  version: "45.7.1"
+
+  valuesContent: |- # Values for the Helm Chart
+    grafana:
+      adminPassword: "admin"
+      service:
+        type: LoadBalancer # Expose Grafana to Host
