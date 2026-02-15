@@ -1,0 +1,15 @@
+# Implements Built-in GitOps & CI/CD and Zero-Touch Operations for Kubernetes
+
+apiVersion: v1 # API version for the Namespace
+kind: Namespace
+
+metadata: # Metadata for the Namespace
+  name: argocd
+---
+apiVersion: kustomize.config.k8s.io/v1beta1 # API version for Kustomization
+kind: Kustomization
+
+namespace: argocd # Namespace for the Resources
+
+resources: # To Apply Resources List
+- https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
