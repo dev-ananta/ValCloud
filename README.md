@@ -10,18 +10,18 @@ Personal Distributed Kubernetes Cloud. I developed this to learn about DevOps, I
 
 ```
 ValCloud/
-├── create_cluster.sh - Brief Purpose
-├── app-deployment.yaml - Brief Purpose
-├── monitoring-quickstart.yaml - Brief Purpose
+├── create_cluster.sh - Cluster Creation.
+├── app-deployment.yaml - Deployment, Service, & Ingress Details.
+├── monitoring-quickstart.yaml - Metrics Server Deployment Resources.
 ├── LICENSE - Licensing Information of ValCloud.
 └── README.md - Implementation Instruction & Specification Pertaining to ValCloud.
 ```
 
 ### File Purposes
 
-- `create_cluster.sh`: Purpose
-- `app-deployment.yaml`: Purpose
-- `monitoring-quickstart.yaml`: Purpose
+- `create_cluster.sh`: Shell Script for Kubernetes Cluster Creation.
+- `app-deployment.yaml`: Kubernetes Deployment, Service, and Ingress for whoami Application.
+- `monitoring-quickstart.yaml`: Resources for Metrics Server Deployment the Kubernetes Cluster
 
 ## Implementation Guide
 
@@ -76,7 +76,7 @@ How this **works**:
 
 - **Commit 1**: Create Repository Structure, Write `create_cluster.sh`, & Update `README.md`.
 - **Commit 2**: Write `app-deployment.yaml`.
-- **Commit 3**: Write `monitoring-quickstart`.
+- **Commit 3**: Write `monitoring-quickstart.yaml`.
 - **Commit 4**: Update `README.md`.
 - **Commit 5**: Test & Debug.
 - **Commit 6**: Request Feedback.
