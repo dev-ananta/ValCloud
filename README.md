@@ -78,8 +78,16 @@ How this **works**:
 - **Commit 2**: Write `app-deployment.yaml`.
 - **Commit 3**: Write `monitoring-quickstart.yaml`.
 - **Commit 4**: Update `README.md`.
-- **Commit 5**: Test & Debug.
-- **Commit 6**: Request Feedback.
-- **Commit 7**: Improve & Finalize for MVP Publishing.
+- **Commit 5**: Testing Stage.
+- **Commit 6**: Define Locations for Edge-Native Architecture.
+- **Commit 7**: Integrate GitOps Loop in order to Sync Config Changes.
+- **Commit 8**: Implement Built-in GitOps & CI/CD via ArgoCD.
+- **Commit 9**: Integrate Monitoring & Security via Prometheus & Grafana.
+- **Commit 10**: Add Node Labels & Affinity Rules for Dynamic Location-Aware Scheduling.
+- **Commit 11**: Add Persistent & Distributed Storage via Persistent Volume Claims.
+- **Commit 12**: Further Develop Extensibility by Adding Configuration Hook.
+- **Commit 13**: Test & Debug.
+- **Commit 14**: Request Feedback.
+- **Commit 15**: Improve & Finalize for MVP Publishing.
 
 #### Signed by Ananta the Developer
