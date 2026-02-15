@@ -1,0 +1,61 @@
+# Kubernetes Deployment, Service, and Ingress for a simple whoami application
+
+apiVersion: apps/v1 # API version for Deployment
+kind: Deployment
+
+metadata: # Metadata for Deployment
+  name: whoami-app
+  labels:
+    app: whoami
+
+spec: # Specification for Deployment
+  replicas: 2 # Desired for High Availability
+
+  selector: # Selector to match Pods
+    matchLabels:
+      app: whoami
+
+  template: # Template for Pod creation
+    metadata:
+      labels:
+        app: whoami
+      spec:
+        containers:
+        - name: whoami
+          image: traefik/whoami # Simple HTTP server that returns request details
+          ports:
+          - containerPort: 80
+---
+apiVersion: v1 # API version for Service
+kind: Service
+
+metadata: # Metadata for Service
+  name: whoami-service
+spec:
+  selector:
+    app: whoami
+  ports:
+  - protocol: TCP # Protocol for Service
+    port: 80
+    targetPort: 80
+---
+apiVersion: networking.k8s.io/v1 # API version for Ingress
+kind: Ingress
+
+metadata: # Metadata for Ingress
+  name: whoami-ingress
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false" # Disable SSL redirection for simplicity
+
+spec: # Specification for Ingress
+  rules:
+  - host: whoami.localhost
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: whoami-service
+            port:
+              number: 80
