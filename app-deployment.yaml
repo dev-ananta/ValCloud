@@ -1,5 +1,18 @@
-# Kubernetes Deployment, Service, and Ingress for whoami Application.
+# Kubernetes Deployment for whoami Application on Edge Nodes
 
+apiVersion: v1 # API version for PersistentVolumeClaim
+kind: PersistentVolumeClaim
+
+metadata: # Metadata for PersistentVolumeClaim
+  name: whoami-data
+
+spec: # Specification for PersistentVolumeClaim
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi # 500 MB Virtual Disk
+---
 apiVersion: apps/v1 # API version for Deployment
 kind: Deployment
 
@@ -16,15 +29,35 @@ spec: # Specification for Deployment
       app: whoami
 
   template: # Template for Pod creation
-    metadata:
+    metadata: # Metadata for Pod
       labels:
         app: whoami
-      spec:
-        containers:
+
+      spec: # Specification for Pod
+        affinity: # Affinity Rules for scheduling Pods on Edge Nodes
+          nodeAffinity:
+            preferredDuringSchedulingIgnoreDuringExecution:
+              - weight: 1
+                preference:
+                  matchExpressions:
+                    - key: topology.kubernetes.io/zone
+                      operator: In
+                      values:
+                      - edge
+
+        containers: # Container Definition for whoami Application
         - name: whoami
-          image: traefik/whoami # Simple HTTP server that returns request details
+          image: traefik/whoami # Request Detail Returning HTTP Server
           ports:
           - containerPort: 80
+          volumeMounts:
+          - mountPath: "/data"
+            name: whoami-storage
+
+        volumes: # Volume Definition for PersistentVolumeClaim
+        - name: whoami-storage
+          persistentVolumeClaim:
+            claimName: whoami-data
 ---
 apiVersion: v1 # API version for Service
 kind: Service
@@ -46,8 +79,6 @@ kind: Ingress
 
 metadata: # Metadata for Ingress
   name: whoami-ingress
-  annotations:
-    ingress.kubernetes.io/ssl-redirect: "false" # Disable SSL redirection for simplicity
 
 spec: # Specification for Ingress
   rules:
