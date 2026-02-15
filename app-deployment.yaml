@@ -1,4 +1,4 @@
-# Kubernetes Deployment, Service, and Ingress for a simple whoami application
+# Kubernetes Deployment, Service, and Ingress for whoami Application.
 
 apiVersion: apps/v1 # API version for Deployment
 kind: Deployment
@@ -31,9 +31,11 @@ kind: Service
 
 metadata: # Metadata for Service
   name: whoami-service
-spec:
+
+spec: # Specification for Service
   selector:
     app: whoami
+    
   ports:
   - protocol: TCP # Protocol for Service
     port: 80

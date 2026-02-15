@@ -1,0 +1,32 @@
+# Resources for Metrics Server Deployment the Kubernetes Cluster
+
+apiVersion: v1 # API version for ServiceAccount
+kind: ServiceAccount
+
+metadata: # Metadata for ServiceAccount
+  labels:
+    k8s-app: metrics-server
+  name: metrics-server
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1 # API version for ClusterRole
+kind: ClusterRole
+
+metadata: # Metadata for ClusterRole
+  labels:
+    k8s-app: metrics-server
+    rbac.authorization.k8s.io/aggregate-to-admin : "true"
+    rbac.authorization.k8s.io/aggregate-to-edit : "true"
+    rbac.authorization.k8s.io/aggregate-to-view : "true"
+  name: system:aggregated-metrics-reader
+
+rules: # Rules for ClusterRole
+- apiGroups:
+  - metrics.k8s.io
+  resources:
+  - pods
+  - nodes
+  verbs:
+  - get
+  - list
+  - watch
