@@ -94,8 +94,6 @@ How this **works**:
 - **Commit 8**: Write `monitoring-stack.yaml`.
 - **Commit 9**: Update `app-deployment.yaml` in order to add Persistent Storage, Location-Aware Scheduling, & Resource Limits.
 - **Commit 10**: Update README.md
-- **Commit 11**: Test & Debug.
-- **Commit 12**: Request Feedback.
-- **Commit 13**: Improve & Finalize for MVP Publishing.
+- **Commit 11**: Improve & Finalize for MVP Publishing.
 
 #### Signed by Ananta the Developer
